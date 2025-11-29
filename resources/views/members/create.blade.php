@@ -42,8 +42,8 @@
                             <div class="col-md-6">
                                 <select id="kin" name="kin" class="form-control @error('kin') is-invalid @enderror">
                                 <option selected value="">Select</option>
-                                <option value="SO" {{ old('kin')=='SO'?' SELECTED ':'' }}>Son of </option>
-                                <option value="WO" {{ old('kin')=='WO'?' SELECTED ':'' }}>Wife of </option>
+                                <option value="SO" {{ old('kin')=='S/O'?' SELECTED ':'' }}>Son of </option>
+                                <option value="WO" {{ old('kin')=='W/O'?' SELECTED ':'' }}>Wife of </option>
                                 </select>
                                 @error('gender')
                                     <span class="invalid-feedback" role="alert">
@@ -92,7 +92,7 @@
                         <div class="row mb-3">
                             <label for="cellphone" class="col-md-4 col-form-label text-md-end">{{ __('Cell Phone') }}</label>
                             <div class="col-md-6">
-                                <input id="cellphone" name="cellphone" type="text" class="form-control @error('cellphone') is-invalid @enderror" value="{{ old('cellphone') }}"  autocomplete="cellphone">
+                                <input id="cellphone" value="920000000000" name="cellphone" type="text" class="form-control @error('cellphone') is-invalid @enderror" value="{{ old('cellphone') }}"  autocomplete="cellphone">
                                 @error('cellphone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

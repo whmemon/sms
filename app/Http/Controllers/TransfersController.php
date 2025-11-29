@@ -22,11 +22,11 @@ class TransfersController extends Controller
      */
     public function index()
     {
-         $transfers = DB::select("SELECT t.id,mtre.name transferee_name ,mtor.name transferor_name ,p.plot_type,p.plot_number,t.created_at,DATE_FORMAT(t.created_at, '%d %M, %Y') AS transfer_date
+         $transfers = DB::select("SELECT t.reference_number,t.id,mtre.name transferee_name ,mtor.name transferor_name ,p.plot_type,p.plot_number,t.created_at,DATE_FORMAT(t.created_at, '%d %M, %Y') AS transfer_date
          FROM plot_transfers t
                     LEFT JOIN members mtre ON mtre.id= t.plot_transferor_id
                     LEFT JOIN members mtor ON mtor.id= t.plot_transferee_id
-                    INNER JOIN plots p ON p.id= t.plot_id");
+                    INNER JOIN plots p ON p.id= t.plot_id where t.parent_id is null order by t.id desc");
         return view('transfers.index',['transfers'=>$transfers]);
     }
 
@@ -70,6 +70,9 @@ class TransfersController extends Controller
                 $first_transfer_id = $transfer->id;
             }
             DB::commit();
+            
+            return redirect()->route('transfers.index')->with('success', 'Record created successfully!');
+
         } catch (\Exception $e) {
             // If there’s an error, roll back all changes
             DB::rollBack();
@@ -118,9 +121,8 @@ class TransfersController extends Controller
 
     public function pdf(string $id)
     {
-        $transfer = DB::select("SELECT t.id,mtre.name transferee_name,mtre.citizenship_number transfaree_citizenship_no,mtre.address AS transferee_address,
-mtre.district AS transferee_district,mtor.name transferor_name,
-mtor.citizenship_number transferor_citizenship_no,p.plot_type,p.plot_number,t.created_at,DATE_FORMAT(t.created_at, '%d %M, %Y') AS transfer_date,reference_number
+        $transfer = DB::select("SELECT t.id,mtre.name transferee_name,mtre.kin transferee_kin,mtre.father_name tranferee_father_name,mtre.husband_name transferee_husband_name,mtre.citizenship_number transfaree_citizenship_no,mtre.address AS transferee_address,
+mtre.district AS transferee_district,mtor.name transferor_name,mtor.citizenship_number transferor_citizenship_no,p.plot_type,p.plot_number,t.created_at,DATE_FORMAT(t.created_at, '%d %M, %Y') AS transfer_date,reference_number
 FROM plot_transfers t
 LEFT JOIN members mtre ON mtre.id= t.plot_transferee_id
 LEFT JOIN members mtor ON mtor.id= t.plot_transferor_id
@@ -134,6 +136,12 @@ INNER JOIN plots p ON p.id= t.plot_id
                             $transferees[$a]['transferee_citizenshipno'] = $transfer[$a]->transfaree_citizenship_no;
                             $transferees[$a]['transferor_citizenshipno'] = $transfer[$a]->transferor_citizenship_no;
                             $transferees[$a]['transferee_address'] = $transfer[$a]->transferee_address;
+                            
+                            $transferees[$a]['transferee_father_name'] = $transfer[$a]->tranferee_father_name;
+                            $transferees[$a]['transferee_husband_name'] = $transfer[$a]->transferee_husband_name;
+
+                            $transferees[$a]['transferee_kin'] = $transfer[$a]->transferee_kin;
+                            
                             $transferees[$a]['transferee_district'] = $transfer[$a]->transferee_district;
 
                     }
@@ -144,12 +152,12 @@ INNER JOIN plots p ON p.id= t.plot_id
             'TRANSFER_DATE' => $transfer[0]->transfer_date,
             'REF_NO' => '012021',
             'transferees'=>$transferees,
-            'EFFECTIVE_DATE'=>$transfer[0]->created_at,
+            'EFFECTIVE_DATE' => \Carbon\Carbon::parse($transfer[0]->created_at)->format('d-m-Y'),
             'PLOT_TYPE'=> $transfer[0]->plot_type,
             'PLOT_NO' => $transfer[0]->plot_number,
             'SOCIETY_NAME' => 'Pakistan Post Office Workers Cooperative Housing Society Limited Karachi',
             'SOCIETY_ADDRESS_LINE1' => 'Sector 36-A Scheme 33 Karachi',
-            'SOCIETY_PHONE' => '+923332832835',
+            'SOCIETY_PHONE' => '',
             'SOCIETY_EMAIL' => 'info@ppowchs.org.pk',
             'SOCIETY_REG_NO' => '811',
             'REFERENCE_NUMBER'=>$transfer[0]->reference_number
@@ -171,7 +179,7 @@ INNER JOIN plots p ON p.id= t.plot_id
 
     function generateReferenceNumber() {
 
-        $max_refno = DB::select("SELECT MAX(reference_number) AS CURRENT_REFNO FROM plot_transfers");
+        $max_refno = DB::select("SELECT MAX(CAST(reference_number AS UNSIGNED)) AS current_refno FROM plot_transfers");
 
         // If no reference number exists in the database, start from 1
         if (empty($max_refno) || is_null($max_refno[0]->CURRENT_REFNO)) {

@@ -146,7 +146,7 @@
         <table><tr><td><img  width="80" src="{{ public_path('logo.jpeg') }}" alt="Logo"></td><td><h1>{{$SOCIETY_NAME }}</h1></td></tr></table>
 
         <div class="meta">
-          {{$SOCIETY_ADDRESS_LINE1}} | Phone: {{$SOCIETY_PHONE}} &nbsp; | &nbsp; Email: {{$SOCIETY_EMAIL}} | Reg No.: {{$SOCIETY_REG_NO}}
+          {{$SOCIETY_ADDRESS_LINE1}} |  &nbsp; Email: {{$SOCIETY_EMAIL}} | Reg No.: {{$SOCIETY_REG_NO}}
         </div>
       </div>
     </div>
@@ -174,9 +174,8 @@
 
     @foreach ($transferees as $t)
     Mr./Mrs. <strong>{{ $t['transferee_name'] }}</strong><br/>
+    {{ $t['transferee_kin'] }}: {{ $t['transferee_father_name'] }} {{ $t['transferee_husband_name'] }}<br/>
     CNIC No.: {{ $t['transferee_citizenshipno'] }}<br/>
-    Address: {{ $t['transferee_address'] }},{{ $t['transferee_district'] }}<br/>
-
     <br/>
     @endforeach
 
@@ -196,8 +195,7 @@
     </p>
 
     <p>
-      Accordingly, the above plot stands <strong>transferred</strong> in the name of
-      <strong>TRANSFEREES</strong> with effect from <strong>{{$EFFECTIVE_DATE}}</strong>, and the membership records of the Society have been updated accordingly.
+      Accordingly, the above plot stands <strong>transferred</strong> in your name</strong> with effect from <strong>{{$EFFECTIVE_DATE}}</strong>, and the membership records of the Society have been updated accordingly.
     </p>
 
     <p>
@@ -209,7 +207,7 @@
         <div class="sig-line">HONORARY SECRETARY</div><br/>
         <div class="stamp">Signature &amp; Society Stamp</div>
       </div></td><td><div class="sig-right flush-right">
-        <div class="sig-line">CHAIRMAN</div><br/>
+        <div class="sig-line">MEMBER MANAGING COMMITTEE</div><br/>
         <div class="stamp">Signature &amp; Society Stamp</div>
       </div></td></tr></table>
 

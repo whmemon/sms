@@ -51,7 +51,9 @@ class MembersController extends Controller
         $member->citizenship_number = $request->citizenship_number;
         $member->cellphone = $request->cellphone;
         $member->email = $request->email;
+        $member->husband_name = $request->husband_name;
         $member->save();
+        return redirect()->route('members.index')->with('success', 'Record created successfully!');
     }
 
     /**

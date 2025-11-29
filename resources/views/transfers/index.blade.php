@@ -56,6 +56,7 @@
   <thead>
     <tr>
       <th scope="col">#</th>
+      <th scope="col">Reference #</th>
       <th scope="col">Plot Type/Number</th>
       <th scope="col">Transfered From</th>
       <th scope="col">Transfered To</th>
@@ -68,6 +69,7 @@
     @foreach ($transfers as $transfer)
     <tr>
       <td scope="row">{{ $loop->index+1}}</td>
+      <td>{{ $transfer->reference_number }}</td>
       <td>{{ $transfer->plot_type.'/'.$transfer->plot_number }}</td>
         <td>{{ $transfer->transferee_name }}</td>
         <td>{{ $transfer->transferor_name }}</td>
