@@ -14,7 +14,15 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+use App\Http\Controllers\PlotTransferVerificationController;
+
+Route::view('/plots/verify', 'plots.verify');
+Route::post('/verify-reference', [PlotTransferVerificationController::class, 'verify']);
+
+
 Route::middleware('auth')->group(function () {
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/plots/index', [PlotsController::class,'index'])->name('plots.index');

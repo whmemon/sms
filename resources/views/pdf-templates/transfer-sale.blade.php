@@ -21,7 +21,7 @@
       width: 100%;
       max-width: 800px;
       margin: 0 auto;
-      padding: 10px 18px;
+      padding: 7px 18px;
       box-sizing: border-box;
     }
 
@@ -190,7 +190,7 @@
     <p>
       This is to inform you that pursuant to the provisions of the <em>Sindh Cooperative
       Housing Societies Act, 2020</em> and the registered Bye-laws of <strong>{{$SOCIETY_NAME}}</strong>,
-      the Management Committee has approved the transfer of the property in your
+      the Management Committee has approved the transfer of the property measuring 120 sq. yard  in your
       name.
     </p>
 

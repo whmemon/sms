@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+@section('title', 'Transfer Listings')
+
 <div class="container">
     <div class="card">
     <div class="card-header">

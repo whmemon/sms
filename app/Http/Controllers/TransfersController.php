@@ -48,14 +48,18 @@ class TransfersController extends Controller
         $member_transferor = Members::where('citizenship_number', '=', $request->citizenship_number)->firstOrFail();
 
 
+        
         $plot = Plots::where('plot_number', '=', $request->plot_number)
             ->where('plot_type', '=', $request->plot_type)
         ->firstOrFail();
         $first_transfer_id = null;
         DB::beginTransaction();
+            
 
         try {
+            
                 $ref_number = $this->generateReferenceNumber();
+            
             for($i=0; $i<sizeof($request->transferee_cnic); $i++)
             {
                 $transfer = new Transfers();
@@ -70,7 +74,7 @@ class TransfersController extends Controller
                 $first_transfer_id = $transfer->id;
             }
             DB::commit();
-            
+
             return redirect()->route('transfers.index')->with('success', 'Record created successfully!');
 
         } catch (\Exception $e) {
@@ -180,13 +184,16 @@ INNER JOIN plots p ON p.id= t.plot_id
     function generateReferenceNumber() {
 
         $max_refno = DB::select("SELECT MAX(CAST(reference_number AS UNSIGNED)) AS current_refno FROM plot_transfers");
-
+        
+        //dd($max_refno[0]->current_refno);
         // If no reference number exists in the database, start from 1
-        if (empty($max_refno) || is_null($max_refno[0]->CURRENT_REFNO)) {
+        if (empty($max_refno) || is_null($max_refno[0]->current_refno)) {
+           
             $ref_counter = 0;
         } else {
+           
             // Extract the numeric part of the reference number (removing last 4 digits)
-            $ref_counter = substr($max_refno[0]->CURRENT_REFNO, 0, -4);
+            $ref_counter = substr($max_refno[0]->current_refno, 0, -4);
         }
 
         // Increment the reference counter for the new reference number

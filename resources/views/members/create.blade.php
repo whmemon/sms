@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@section('title', 'New Member')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -44,6 +45,7 @@
                                 <option selected value="">Select</option>
                                 <option value="SO" {{ old('kin')=='S/O'?' SELECTED ':'' }}>Son of </option>
                                 <option value="WO" {{ old('kin')=='W/O'?' SELECTED ':'' }}>Wife of </option>
+                                <option value="DO" {{ old('kin')=='D/O'?' SELECTED ':'' }}>Daughter of </option>
                                 </select>
                                 @error('gender')
                                     <span class="invalid-feedback" role="alert">

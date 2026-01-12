@@ -166,6 +166,14 @@ left join members m on m.id =p.current_member_id where p.status is not null");
         return view('plots.index',['plots'=>$plots]);
     }
 
+    public function verify(Request $request)
+    {
+        
+
+
+        return view('plots.verify');
+    }
+
 
 
 
