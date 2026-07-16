@@ -68,10 +68,10 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Plot Type</th>
-      <th scope="col">Plot Number</th>
+      <th scope="col">Plot Type/Number</th>
       <th scope="col">Folio Number</th>
       <th scope="col">Member Name</th>
+      <th scope="col">Citizenship #</th>
       <th scope="col">Cell Phone</th>
       <th scope="col">Actions</th>
 
@@ -81,10 +81,10 @@
     @foreach ($plots as $plot)
     <tr id="row-{{ $plot->id }}" @if($plot->status != null) class="table-danger" @else btn-secondary @endif>
       <td scope="row">{{ $loop->index+1}}</td>
-      <td>{{ $plot->plot_type }}</td>
-      <td>{{ $plot->plot_number }}</td>
+      <td>{{ $plot->plot_type }}/{{ $plot->plot_number }}</td>
       <td>{{ $plot->folio_number }}</td>
       <td>{{ $plot->member_name }}</td>
+      <td>{{ $plot->citizenship_number }}</td>
       <td>{{ $plot->cellphone }}</td>
             <td class="flex"><a href="#" class="btn btn-primary">View</a>
         <a href="{{ route('plots.edit',$plot->id) }}" class="btn btn-success">Edit</a>

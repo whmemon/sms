@@ -17,7 +17,7 @@ class PlotsController extends Controller
      */
     public function index()
     {
-        $plots = DB::select("select p.id,folio_number,plot_number, plot_type,m.name as member_name,m.cellphone,p.status
+        $plots = DB::select("select p.id,folio_number,plot_number, plot_type,m.name as member_name,m.cellphone,p.status,m.citizenship_number 
         from plots p left join members m on m.id =p.current_member_id");
         return view('plots.index',['plots'=>$plots]);
     }
